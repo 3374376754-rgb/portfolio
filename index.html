@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIE WEI — Tech PR &amp; Marketing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#050505;
+    --card:#1A1A1A;
+    --strip:#151515;
+    --divider:#333;
+    --line:#262626;
+    --white:#FFFFFF;
+    --gray:#888888;
+    --gray2:#666666;
+    --gray3:#777777;
+    --mint:#7EE0C0;
+    --blue:#4A9EFF;
+    --ease:cubic-bezier(.25,1,.5,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+  body{
+    background:var(--bg);color:var(--white);
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--mint);color:#000}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+  .wrap{max-width:960px;margin:0 auto;padding:0 clamp(20px,5vw,44px)}
+  :focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+  section{scroll-snap-align:start;scroll-snap-stop:normal}
+
+  /* ============ 1. LOADER ============ */
+  .loader{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s}
+  body.loaded .loader{opacity:0;visibility:hidden}
+  .loader__text{font-family:"JetBrains Mono",monospace;font-size:clamp(13px,2.4vw,16px);color:#fff;letter-spacing:.02em;white-space:nowrap}
+  .loader__cursor{display:inline-block;width:9px;height:1.2em;background:var(--mint);margin-left:2px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ============ reveal ============ */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ============ 2. HERO ============ */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;text-align:center;padding:40px 20px 80px}
+  .hero__inner{will-change:transform;display:flex;flex-direction:column;align-items:center}
+  .hero__name{font-size:clamp(40px,9vw,72px);font-weight:700;letter-spacing:-.02em;line-height:1.6;transition:transform .35s var(--ease)}
+  .hero__name:hover{transform:scale(1.05)}
+  .hero__role{font-size:clamp(20px,4.5vw,36px);color:var(--mint);font-weight:500;line-height:1.6;margin-top:4px;transition:transform .35s var(--ease)}
+  .hero__role:hover{transform:scale(1.06)}
+  .hero__sub{font-size:clamp(12px,2.5vw,18px);color:var(--gray);font-weight:400;line-height:1.6;margin-top:4px;transition:transform .35s var(--ease)}
+  .hero__sub:hover{transform:scale(1.06)}
+  .hero__scroll{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gray2);letter-spacing:.2em}
+
+  /* ============ 3. ABOUT ============ */
+  .about{padding:100px 0;position:relative}
+  .about__inner{position:relative;padding-left:26px;max-width:640px}
+  .about__line{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--blue);height:0;transition:height .6s ease}
+  .about.in .about__line{height:100%}
+  .about__text{font-size:clamp(16px,2vw,18px);line-height:1.8;color:var(--gray)}
+  .about__text b{color:var(--mint);font-weight:600}
+
+  /* ============ 4. SKILL NAV ============ */
+  .skills{padding:20px 0 70px}
+  .skills__row{display:flex;flex-wrap:wrap;gap:14px 30px}
+  .skill{font-family:"JetBrains Mono",monospace;font-size:clamp(14px,2vw,16px);color:var(--gray2);transition:color .25s,transform .3s var(--ease);display:inline-block}
+  .skill:hover{color:var(--mint);transform:translateX(4px) scale(1.06)}
+
+  /* ============ spotlight ============ */
+  .spot-section{position:relative;overflow:hidden;background:#0A0A0A}
+  .spotlight{
+    position:absolute;left:0;top:0;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:1;
+    background:radial-gradient(circle, rgba(74,158,255,.15) 0%, rgba(74,158,255,.05) 45%, transparent 70%);
+    opacity:0;transition:opacity .45s ease;will-change:transform;
+  }
+  .spot-section.active .spotlight{opacity:1}
+
+  /* ============ 5. CASE STUDIES (unified mint) ============ */
+  .cases{padding:70px 0 40px}
+  .cases .wrap{position:relative;z-index:2}
+  .cases__label{margin-bottom:34px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);letter-spacing:.08em}
+  .case{position:relative;background:var(--card);border-radius:12px;padding:30px 30px 30px 34px;margin-bottom:22px;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease}
+  .case:hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(0,0,0,.7)}
+  .case__bar{position:absolute;left:0;top:0;bottom:0;width:4px;background:rgba(255,255,255,.1);transition:background .35s ease}
+  .case:hover .case__bar{background:var(--mint)}
+  .case__label{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);letter-spacing:.06em;transition:color .25s}
+  .case__title{font-size:24px;font-weight:700;margin-top:12px;letter-spacing:-.01em;transition:color .25s,transform .35s var(--ease)}
+  .case:hover .case__label{color:var(--mint)}
+  .case:hover .case__title{color:var(--mint);transform:scale(1.02)}
+  .case__divider{height:1px;background:var(--divider);margin:18px 0;width:100%}
+  .case__desc{font-size:15px;color:var(--gray);line-height:1.7;max-width:560px}
+  .case__points{margin-top:20px;display:flex;flex-direction:column;gap:9px}
+  .pt{font-size:15px;color:var(--gray)}
+  .pt b{color:var(--mint);font-weight:600}
+  .pt .arrow{color:var(--gray2);margin-right:6px}
+  .case__link{margin-top:24px;display:inline-flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--mint);background:none;border:none;cursor:pointer;padding:0;transition:opacity .2s}
+  .case__link span{display:inline-block;transition:transform .25s}
+  .case__link:hover span{transform:translateX(2px)}
+
+  /* ============ 6. PRINCIPLES — 3D cylinder carousel ============ */
+  .principles{
+    padding:90px 0;
+    background-color:#0A0A0A;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:40px 40px;
+  }
+  .principles .wrap{position:relative;z-index:2}
+  .principles__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .principles__label{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);letter-spacing:.08em}
+  .principles__hint{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--gray2);letter-spacing:.3em;transition:opacity .4s ease;white-space:nowrap}
+  .principles__hint.hidden{opacity:0}
+
+  .carousel{position:relative;height:480px;perspective:1200px;perspective-origin:50% 50%;user-select:none;touch-action:none;cursor:grab}
+  .carousel.grabbing{cursor:grabbing}
+  .pcard{
+    position:absolute;left:0;right:0;top:50%;max-width:560px;margin:0 auto;
+    background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:12px;
+    padding:22px 26px;pointer-events:none;
+    will-change:transform,opacity,filter;transition:border-color .3s ease;
+  }
+  .pcard.is-active{border-color:rgba(255,255,255,.14)}
+  .p-head{font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:500;letter-spacing:.02em}
+  .p-head .gt{color:var(--gray2);margin-right:8px;transition:color .25s}
+  .p-head .p-num{color:var(--gray2);transition:color .25s}
+  .p-head .p-name{color:var(--gray);transition:color .25s}
+  .pcard.is-active .gt{color:var(--gray)}
+  .pcard.is-active .p-num{color:var(--mint)}
+  .pcard.is-active .p-name{color:var(--white)}
+  .p-desc{font-size:15px;color:var(--gray);line-height:1.65;margin-top:10px;transition:color .25s}
+  .pcard.is-active .p-desc{color:#b7b7b7}
+
+  /* ============ 7. CONTACT ============ */
+  .contact{padding:100px 0 60px}
+  .contact h2{font-size:32px;font-weight:700;letter-spacing:-.01em}
+  .contact__desc{margin-top:20px;font-size:16px;color:var(--gray);max-width:440px;line-height:1.7}
+  .contact__links{margin-top:38px;display:flex;gap:30px;flex-wrap:wrap}
+  .clink{font-family:"JetBrains Mono",monospace;font-size:15px;color:var(--white);letter-spacing:0;transition:letter-spacing .3s ease,color .25s}
+  .clink:hover{letter-spacing:4px;color:var(--mint)}
+  .contact__foot{margin-top:90px;padding-top:24px;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gray2)}
+
+  /* ============ MODAL ============ */
+  .modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .modal.show{opacity:1;visibility:visible}
+  .modal__panel{width:min(760px,100%);max-height:86vh;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:34px;position:relative;transform:translateY(20px);transition:transform .35s ease}
+  .modal.show .modal__panel{transform:none}
+  .modal__close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;color:var(--gray);background:var(--strip);border:1px solid var(--line);cursor:pointer;transition:color .2s,border-color .2s}
+  .modal__close:hover{color:#fff;border-color:var(--gray2)}
+  .modal__label{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);letter-spacing:.06em}
+  .modal__title{font-size:26px;font-weight:700;margin-top:10px;letter-spacing:-.01em}
+  .modal__divider{height:1px;background:var(--divider);margin:20px 0}
+  .modal__desc{font-size:15px;color:var(--gray);line-height:1.7}
+  .modal__media{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  @media(max-width:560px){.modal__media{grid-template-columns:1fr}}
+  .media{position:relative;aspect-ratio:4/3;background:var(--strip);border:1px solid var(--divider);border-radius:10px;overflow:hidden}
+  .media img,.media video{width:100%;height:100%;object-fit:cover;display:block;transition:all .4s ease-in-out}
+  .media__cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:700;color:#fff;line-height:1.4;opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+  .media:hover img,.media:hover video{filter:brightness(.3) blur(4px)}
+  .media:hover .media__cap{opacity:1;transform:translateY(0)}
+  .media--zoom{cursor:zoom-in}
+  .media--zoom img{object-fit:contain}
+  .media--zoom:hover{border-color:var(--mint)}
+  .media__tag{position:absolute;top:10px;left:10px;z-index:2;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;color:#fff;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:4px;pointer-events:none}
+  .lightbox{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .lightbox.show{opacity:1;visibility:visible}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:4px}
+  .lightbox__close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .lightbox__close:hover{background:rgba(255,255,255,.18)}
+  @media(hover:none){.media__cap{opacity:1;transform:none;background:rgba(0,0,0,.45)}}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;scroll-snap-type:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    .about__line{height:100%}
+    .loader__cursor{animation:none}
+    .case{transition:none}
+    .spotlight{opacity:0}
+    .carousel{height:auto;perspective:none}
+    .pcard{position:relative;top:auto;left:auto;right:auto;transform:none;opacity:1;filter:none;margin-bottom:14px;pointer-events:auto}
+    .principles__hint{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. LOADER -->
+<div class="loader" id="loader">
+  <div class="loader__text"><span id="loaderText"></span><span class="loader__cursor"></span></div>
+</div>
+
+<main id="top">
+
+  <!-- 2. HERO -->
+  <section class="hero">
+    <div class="hero__inner reveal" id="heroInner">
+      <h1 class="hero__name">NIE WEI</h1>
+      <p class="hero__role">Tech PR &amp; Marketing</p>
+      <p class="hero__sub">Health Communication &times; Data &times; Design</p>
+    </div>
+    <div class="hero__scroll">( Scroll to explore )</div>
+  </section>
+
+  <!-- 3. ABOUT -->
+  <section class="about">
+    <div class="wrap">
+      <div class="about__inner reveal" id="about">
+        <div class="about__line"></div>
+        <p class="about__text">
+          I'm a Digital Humanities Master's student at NTU, with <b>four internships</b> across tech PR, social media, and media relations. I've delivered <b>2.7M+</b> campaign impressions, built social matrices from zero, and turned AI charging tech into narratives for the UN. Now I'm adding data and AI literacy to my toolkit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SKILL NAV -->
+  <section class="skills">
+    <div class="wrap">
+      <div class="skills__row reveal">
+        <a class="skill" href="#case1">( Campaign Strategy )</a>
+        <a class="skill" href="#case2">( Event Marketing )</a>
+        <a class="skill" href="#case3">( Social Media )</a>
+        <a class="skill" href="#case4">( Visual Communication )</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CASE STUDIES (unified mint) -->
+  <section class="cases spot-section" id="casesSection">
+    <div class="spotlight"></div>
+    <div class="wrap">
+      <div class="cases__label reveal">// SELECTED WORK</div>
+
+      <article class="case reveal" id="case1">
+        <div class="case__bar"></div>
+        <div class="case__label">01 / CAMPAIGN STRATEGY</div>
+        <h3 class="case__title">Insta360 X6 Launch</h3>
+        <div class="case__divider"></div>
+        <p class="case__desc">Four-stage "leak" narrative: Spec leak &rarr; Sample debut &rarr; KOL reveal &rarr; Preheat</p>
+        <div class="case__points">
+          <div class="pt"><span class="arrow">&#9656;</span><b>55+</b> creators sourced</div>
+          <div class="pt"><span class="arrow">&#9656;</span><b>3</b> content angles A/B tested</div>
+          <div class="pt"><span class="arrow">&#9656;</span><b>2.7M+</b> impressions delivered</div>
+          <div class="pt"><span class="arrow">&#9656;</span><b>2M+</b> views on hero video</div>
+        </div>
+        <button class="case__link" data-open="campaign">View project details <span>&rarr;</span></button>
+      </article>
+
+      <article class="case reveal" id="case2">
+        <div class="case__bar"></div>
+        <div class="case__label">02 / EVENT MARKETING</div>
+        <h3 class="case__title">World AI Conference 2025</h3>
+        <div class="case__divider"></div>
+        <p class="case__desc">Supported the global launch of Physical AI and robotics advancements, orchestrating on-site PR and media relations. Translated complex robotics milestones into compelling narratives for international audiences.</p>
+        <div class="case__points">
+          <div class="pt"><span class="arrow">&#9656;</span>Coordinated with <b>6</b> internal cross-functional teams</div>
+          <div class="pt"><span class="arrow">&#9656;</span>Pitched to <b>UNDP/UNEP</b> audiences</div>
+          <div class="pt"><span class="arrow">&#9656;</span>Shaped narratives for <b>35</b> investors</div>
+        </div>
+        <button class="case__link" data-open="event">View project details <span>&rarr;</span></button>
+      </article>
+
+      <article class="case reveal" id="case3">
+        <div class="case__bar"></div>
+        <div class="case__label">03 / SOCIAL MEDIA</div>
+        <h3 class="case__title">Social Media Content Matrix</h3>
+        <div class="case__divider"></div>
+        <p class="case__desc">Built a social media content system &mdash; developed content pillars, managed editorial calendars, and led end-to-end video production for short-form platforms.</p>
+        <div class="case__points">
+          <div class="pt"><span class="arrow">&#9656;</span>Published <b>135</b> posts</div>
+          <div class="pt"><span class="arrow">&#9656;</span><b>+28%</b> engagement in 3 months</div>
+        </div>
+        <button class="case__link" data-open="social">View project details <span>&rarr;</span></button>
+      </article>
+
+      <article class="case reveal" id="case4">
+        <div class="case__bar"></div>
+        <div class="case__label">04 / VISUAL COMMUNICATION</div>
+        <h3 class="case__title">Visual Communication Portfolio</h3>
+        <div class="case__divider"></div>
+        <p class="case__desc">A curated collection of data visualization and graphic design. Blending analytical rigor with visual storytelling to make complex information accessible.</p>
+        <div class="case__points">
+          <div class="pt"><span class="arrow">&#9656;</span>Interactive data visualizations on <b>drug abuse research</b></div>
+          <div class="pt"><span class="arrow">&#9656;</span><b>Poster</b> and <b>social media</b> creative design</div>
+          <div class="pt"><span class="arrow">&#9656;</span>Winner: <b>China Daily Best News Reporting Award</b></div>
+        </div>
+        <button class="case__link" data-open="visual">View project details <span>&rarr;</span></button>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 6. PRINCIPLES — 3D cylinder carousel -->
+  <section class="principles spot-section" id="principlesSection">
+    <div class="spotlight"></div>
+    <div class="wrap">
+      <div class="principles__top">
+        <div class="principles__label reveal">// MY PRINCIPLES</div>
+        <div class="principles__hint" id="principlesHint">( Scroll to rotate )</div>
+      </div>
+      <div class="carousel" id="carousel">
+        <div class="pcard">
+          <div class="p-head"><span class="gt">&gt;</span> <span class="p-num">01</span> <span class="p-name">CLARITY</span></div>
+          <p class="p-desc">I distill complex tech into narratives anyone can understand.</p>
+        </div>
+        <div class="pcard">
+          <div class="p-head"><span class="gt">&gt;</span> <span class="p-num">02</span> <span class="p-name">EMPATHY</span></div>
+          <p class="p-desc">I design content that respects the audience's fears and hopes.</p>
+        </div>
+        <div class="pcard">
+          <div class="p-head"><span class="gt">&gt;</span> <span class="p-num">03</span> <span class="p-name">DATA-DRIVEN</span></div>
+          <p class="p-desc">I use analytics to sharpen messaging and prove impact.</p>
+        </div>
+        <div class="pcard">
+          <div class="p-head"><span class="gt">&gt;</span> <span class="p-num">04</span> <span class="p-name">VISUAL CRAFT</span></div>
+          <p class="p-desc">I believe good design is not decoration &mdash; it's communication.</p>
+        </div>
+        <div class="pcard">
+          <div class="p-head"><span class="gt">&gt;</span> <span class="p-num">05</span> <span class="p-name">CROSS-CULTURAL</span></div>
+          <p class="p-desc">I adapt stories for different markets and platforms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CONTACT -->
+  <section class="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Let's build something clear.</h2>
+        <p class="contact__desc">I'm open to internships and projects in tech PR, social media, and content strategy.</p>
+        <div class="contact__links">
+          <a class="clink" href="mailto:w3374376754@163.com">( Email me &rarr; )</a>
+          <a class="clink" href="https://www.linkedin.com/in/wei-nie-aa3a6b367" target="_blank" rel="noopener">( LinkedIn &rarr; )</a>
+        </div>
+      </div>
+      <div class="contact__foot reveal">&copy; 2026 Nie Wei &middot; Built with Framer</div>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal__panel" id="modalPanel"></div>
+</div>
+
+<!-- LIGHTBOX (click-to-zoom full view) -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" alt="">
+  <button class="lightbox__close" id="lightboxClose" aria-label="关闭">×</button>
+</div>
+
+<script>
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. loader ---------- */
+  var loader = document.getElementById('loader');
+  var loaderText = document.getElementById('loaderText');
+  var FULL = "Turning complex tech into human stories...";
+
+  function initReveal(){
+    var els = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      },{threshold:.12});
+      els.forEach(function(el){ io.observe(el); });
+    }else{
+      els.forEach(function(el){ el.classList.add('in'); });
+    }
+  }
+  function finishLoad(){
+    document.body.classList.add('loaded');
+    initReveal();
+    setTimeout(function(){ loader.style.display='none'; },550);
+  }
+  if(reduced){ loaderText.textContent = FULL; finishLoad(); }
+  else{
+    var i=0;
+    var timer=setInterval(function(){
+      loaderText.textContent += FULL.charAt(i); i++;
+      if(i>=FULL.length){ clearInterval(timer); setTimeout(finishLoad,400); }
+    },50);
+  }
+
+  /* ---------- 2. hero parallax ---------- */
+  var heroInner = document.getElementById('heroInner');
+  if(!reduced){
+    window.addEventListener('mousemove', function(e){
+      var nx = e.clientX / window.innerWidth - 0.5;
+      var ny = e.clientY / window.innerHeight - 0.5;
+      heroInner.style.transform = 'translate(' + (nx*10) + 'px,' + (ny*10) + 'px)';
+    });
+  }
+
+  /* ---------- spotlight (lerp, ~100ms trail) ---------- */
+  var spots = [];
+  document.querySelectorAll('.spot-section').forEach(function(sec){
+    var glow = sec.querySelector('.spotlight');
+    if(!glow) return;
+    var s = {sec:sec, glow:glow, tx:0, ty:0, x:0, y:0};
+    sec.addEventListener('mousemove', function(e){
+      var r = sec.getBoundingClientRect();
+      s.tx = e.clientX - r.left; s.ty = e.clientY - r.top;
+      sec.classList.add('active');
+    });
+    sec.addEventListener('mouseleave', function(){ sec.classList.remove('active'); });
+    spots.push(s);
+  });
+  if(!reduced){
+    (function loop(){
+      spots.forEach(function(s){
+        s.x += (s.tx - s.x) * 0.16;
+        s.y += (s.ty - s.y) * 0.16;
+        s.glow.style.transform = 'translate(' + (s.x-300) + 'px,' + (s.y-300) + 'px)';
+      });
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* ---------- 6. principles — 3D cylinder carousel ---------- */
+  if(!reduced){
+    (function(){
+      var carousel = document.getElementById('carousel');
+      var pCards = Array.prototype.slice.call(carousel.querySelectorAll('.pcard'));
+      var section = document.getElementById('principlesSection');
+      var hint = document.getElementById('principlesHint');
+      var N = pCards.length;
+
+      var pos = 0, target = 0, lastWheel = 0, scrolling = false, snapAnim = null, interacted = false;
+      var dragging = false, lastY = 0, dragVel = 0;
+
+      /* wheel drives rotation */
+      section.addEventListener('wheel', function(e){
+        e.preventDefault();
+        target += e.deltaY / 100;
+        lastWheel = performance.now();
+        scrolling = true;
+        snapAnim = null;
+        if(!interacted){ interacted = true; hint.classList.add('hidden'); }
+      }, {passive:false});
+
+      /* drag drives rotation */
+      carousel.addEventListener('pointerdown', function(e){
+        dragging = true; lastY = e.clientY; dragVel = 0;
+        scrolling = false; snapAnim = null;
+        carousel.classList.add('grabbing');
+        if(!interacted){ interacted = true; hint.classList.add('hidden'); }
+        if(carousel.setPointerCapture){ carousel.setPointerCapture(e.pointerId); }
+      });
+      carousel.addEventListener('pointermove', function(e){
+        if(!dragging) return;
+        var dy = e.clientY - lastY; lastY = e.clientY;
+        target += dy / 90;
+        dragVel = dy / 90;
+      });
+      function endDrag(){
+        if(!dragging) return;
+        dragging = false;
+        carousel.classList.remove('grabbing');
+        lastWheel = performance.now();
+        scrolling = true; // trigger inertia snap
+      }
+      carousel.addEventListener('pointerup', endDrag);
+      carousel.addEventListener('pointercancel', endDrag);
+
+      /* wrap an index offset to [-N/2, N/2) */
+      function wrap(d){
+        var h = N/2;
+        return ((d + h) % N + N) % N - h;
+      }
+
+      function render(p){
+        pCards.forEach(function(card, i){
+          var d = wrap(i - p);
+          var ad = Math.abs(d);
+          var sign = d >= 0 ? 1 : -1;
+          var rot = sign * ad * 45;         // deg
+          var scale = 1 - ad * 0.15;
+          var tz = -ad * 100;               // px
+          var opacity = Math.max(0, 1 - ad * 0.7);
+          var blur = ad * 2;                // px
+          var ty = d * 80;                  // px vertical spread
+          card.style.transform = 'translateY(calc(-50% + ' + ty + 'px)) rotateX(' + rot + 'deg) translateZ(' + tz + 'px) scale(' + scale + ')';
+          card.style.opacity = opacity.toFixed(3);
+          card.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
+          card.style.zIndex = String(200 - Math.round(ad * 40));
+          card.classList.toggle('is-active', ad < 0.5);
+        });
+      }
+
+      /* mechanical ease-out (approx cubic-bezier(0.23,1,0.32,1)) */
+      function easeOutExpo(t){ return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+      function raf(t){
+        if(snapAnim){
+          var p = (t - snapAnim.start) / snapAnim.dur;
+          if(p >= 1){ pos = snapAnim.to; snapAnim = null; }
+          else{ pos = snapAnim.from + (snapAnim.to - snapAnim.from) * easeOutExpo(p); }
+        }else if(scrolling && !dragging && (t - lastWheel) > 140){
+          /* wheel/drag stopped → snap to nearest card with inertia */
+          snapAnim = { from: pos, to: Math.round(target), start: t, dur: 650 };
+          target = snapAnim.to;
+          scrolling = false;
+        }else{
+          /* chase target while actively scrolling/dragging */
+          pos += (target - pos) * (dragging ? 0.55 : 0.22);
+          if(Math.abs(target - pos) < 0.0005 && !dragging){ pos = target; }
+        }
+        render(pos);
+        requestAnimationFrame(raf);
+      }
+      render(pos);
+      requestAnimationFrame(raf);
+    })();
+  }
+
+  /* ---------- 5. case modal ---------- */
+  var DETAILS = {
+    campaign:{
+      label:'01 / CAMPAIGN STRATEGY', title:'Insta360 X6 Launch',
+      desc:'Four-stage "leak" narrative built around scarcity and reveal: Spec leak → Sample debut → KOL reveal → Preheat. Sourced creators, ran A/B tests on three content angles, and coordinated the hero video that pulled 2M+ views.',
+      media:[
+        {t:'video', src:'portfolio-assets/insta360-02-tvc.mp4', poster:'portfolio-assets/insta360-02-tvc-poster.png', cap:'Advertising TVC Design'},
+        {t:'img', src:'portfolio-assets/insta360-01-head-kol.png', cap:'Head KOL Collaboration · 1.72M Views'},
+        {t:'img', src:'portfolio-assets/insta360-03-overseas-review.png', cap:'Overseas Creator Review'}
+      ]
+    },
+    event:{
+      label:'02 / EVENT MARKETING', title:'World AI Conference 2025',
+      desc:'Supported the global launch of Physical AI and robotics advancements, orchestrating on-site PR and media relations. Translated complex robotics milestones into compelling narratives for international audiences.',
+      media:[
+        {t:'img', src:'portfolio-assets/waic-01-venue.png', cap:'Conference Venue Setup'},
+        {t:'img', src:'portfolio-assets/waic-02-media-pitch.png', cap:'Media Pitch &amp; Release'}
+      ]
+    },
+    social:{
+      label:'03 / SOCIAL MEDIA', title:'Social Media Content Matrix',
+      desc:'Built a social media content system — developed content pillars, managed editorial calendars, and led end-to-end video production for short-form platforms.',
+      media:[
+        {t:'video', src:'portfolio-assets/social-03-showcase.mp4', poster:'portfolio-assets/social-03-showcase-poster.png', cap:'Social Media Operation Showcase'},
+        {t:'img', src:'portfolio-assets/social-01-poster.png', cap:'X5 Social Media Poster Design'},
+        {t:'img', src:'portfolio-assets/social-02-content-op.png', cap:'Insta360 X5 Content Operation'}
+      ]
+    },
+    visual:{
+      label:'04 / VISUAL COMMUNICATION', title:'Visual Communication Portfolio',
+      desc:'A curated collection of data visualization and graphic design. Blending analytical rigor with visual storytelling to make complex information accessible.',
+      media:[
+        {t:'zoom', src:'portfolio-assets/visual-01.png', cap:'Chapter 1', ratio:'1228/1600'},
+        {t:'zoom', src:'portfolio-assets/visual-02.png', cap:'Chapter 2', ratio:'1122/1600'},
+        {t:'zoom', src:'portfolio-assets/visual-03.png', cap:'Chapter 3', ratio:'1131/1600'}
+      ]
+    }
+  };
+  var modal = document.getElementById('modal');
+  var modalPanel = document.getElementById('modalPanel');
+  function mediaTile(m){
+    if(m.t === 'video'){
+      return '<div class="media"><video src="'+m.src+'" poster="'+m.poster+'" autoplay loop muted playsinline preload="metadata"></video><div class="media__cap">'+m.cap+'</div></div>';
+    }
+    if(m.t === 'img'){
+      return '<div class="media"><img src="'+m.src+'" alt="'+m.cap+'" loading="lazy"><div class="media__cap">'+m.cap+'</div></div>';
+    }
+    return '<div class="media media--zoom" style="aspect-ratio:'+m.ratio+'"><img src="'+m.src+'" alt="'+m.cap+'" loading="lazy"><span class="media__tag">'+m.cap+'</span></div>';
+  }
+  function openModal(key){
+    var d = DETAILS[key]; if(!d) return;
+    var media = d.media.map(mediaTile).join('');
+    modalPanel.innerHTML =
+      '<button class="modal__close" id="modalClose" aria-label="关闭">×</button>'+
+      '<div class="modal__label">'+d.label+'</div>'+
+      '<div class="modal__title">'+d.title+'</div>'+
+      '<div class="modal__divider"></div>'+
+      '<p class="modal__desc">'+d.desc+'</p>'+
+      '<div class="modal__media">'+media+'</div>';
+    modal.classList.add('show');
+    document.body.style.overflow='hidden';
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+  }
+  function closeModal(){
+    modal.classList.remove('show');
+    document.body.style.overflow='';
+    modalPanel.querySelectorAll('video').forEach(function(v){ v.pause(); });
+  }
+  document.querySelectorAll('.case__link').forEach(function(btn){ btn.addEventListener('click', function(){ openModal(btn.getAttribute('data-open')); }); });
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src, alt){ lightboxImg.src = src; lightboxImg.alt = alt || ''; lightbox.classList.add('show'); }
+  function closeLightbox(){ lightbox.classList.remove('show'); }
+  lightbox.addEventListener('click', function(e){ if(e.target===lightbox || e.target.id==='lightboxClose') closeLightbox(); });
+  modalPanel.addEventListener('click', function(e){
+    var tile = e.target.closest('.media--zoom');
+    if(!tile) return;
+    var img = tile.querySelector('img');
+    if(img){ openLightbox(img.src, img.alt); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape') return;
+    if(lightbox.classList.contains('show')){ closeLightbox(); }
+    else{ closeModal(); }
+  });
+</script>
+</body>
+</html>
