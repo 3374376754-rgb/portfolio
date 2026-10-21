@@ -566,9 +566,9 @@
       return '<div class="media"><video src="'+m.src+'" poster="'+m.poster+'" autoplay loop muted playsinline preload="metadata"></video><div class="media__cap">'+m.cap+'</div></div>';
     }
     if(m.t === 'img'){
-      return '<div class="media"><img src="'+m.src+'" alt="'+m.cap+'" loading="lazy"><div class="media__cap">'+m.cap+'</div></div>';
+      return '<div class="media"><img src="'+m.src+'" alt="'+m.cap+'"><div class="media__cap">'+m.cap+'</div></div>';
     }
-    return '<div class="media media--zoom" style="aspect-ratio:'+m.ratio+'"><img src="'+m.src+'" alt="'+m.cap+'" loading="lazy"><span class="media__tag">'+m.cap+'</span></div>';
+    return '<div class="media media--zoom" style="aspect-ratio:'+m.ratio+'"><img src="'+m.src+'" alt="'+m.cap+'"><span class="media__tag">'+m.cap+'</span></div>';
   }
   function openModal(key){
     var d = DETAILS[key]; if(!d) return;
