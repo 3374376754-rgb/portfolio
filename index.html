@@ -199,16 +199,21 @@
   .ws-card__collapse{display:block;margin:24px 0 2px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--mint);background:none;border:none;padding:0;cursor:pointer;text-align:left;transition:opacity .2s}
   .ws-card__collapse:hover{opacity:.7}
 
-  /* Sample 1 — white news portal */
+  /* Sample 1 — white news portal (bilingual) */
   .ws-news{border-radius:8px;overflow:hidden;background:#f6f5f2;border:1px solid #e6e4df}
   .ws-news::before{content:"";display:block;height:3px;background:#111}
   .ws-news__inner{padding:24px 28px 30px}
-  .ws-news__kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a8a8a;margin-bottom:14px}
-  .ws-news__headline{font-family:Inter,system-ui,sans-serif;font-size:23px;font-weight:700;line-height:1.35;letter-spacing:-.015em;color:#111;margin-bottom:18px}
-  .ws-news__dateline{font-family:"JetBrains Mono",monospace;font-size:11px;color:#8a8a8a;letter-spacing:.04em;margin-bottom:20px}
-  .ws-news p{font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.7;color:#3a3a3a;margin-bottom:16px}
-  .ws-news blockquote{border-left:4px solid #111;padding:6px 0 6px 20px;margin:22px 0;font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.7;color:#666;font-style:italic}
+  .ws-news__lang{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9a9a9a;margin-bottom:14px}
+  .ws-news__meta{font-family:"JetBrains Mono",monospace;font-size:11px;color:#8a8a8a;letter-spacing:.04em;margin-bottom:18px}
+  .ws-news__headline{font-family:Inter,system-ui,sans-serif;font-size:23px;font-weight:700;line-height:1.45;letter-spacing:-.015em;color:#111;margin-bottom:20px}
+  .ws-news h5{font-family:Inter,system-ui,sans-serif;font-size:17px;font-weight:700;line-height:1.45;letter-spacing:-.01em;color:#111;margin:24px 0 10px}
+  .ws-news p{font-family:"Source Serif 4",Georgia,"Songti SC","STSong","SimSun",serif;font-size:16px;line-height:1.75;color:#3a3a3a;margin-bottom:16px}
+  .ws-news blockquote{border-left:4px solid #111;padding:6px 0 6px 20px;margin:22px 0;font-family:"Source Serif 4",Georgia,"Songti SC","STSong","SimSun",serif;font-size:17px;line-height:1.75;color:#666;font-style:italic}
   .ws-news blockquote b{font-weight:600;font-style:normal;color:#2a2a2a}
+  .ws-news__divider{border:0;border-top:1px solid #d9d6cf;margin:32px 0}
+  .ws-news__source{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.04em;color:#8a8a8a;margin-top:24px}
+  .ws-news__source a{color:#111;text-decoration:underline;text-underline-offset:3px}
+  .ws-news__source a:hover{color:#555}
 
   /* Sample 2 — dark email client */
   .ws-email{border-radius:8px;overflow:hidden;background:#161616;border:1px solid var(--divider)}
@@ -397,7 +402,29 @@
                 <p class="ws-disclaimer">Note: Sensitive brand names and confidential data have been redacted for portfolio purposes.</p>
                 <div class="ws-news">
                   <div class="ws-news__inner">
-                    <div class="ws-news__kicker">Press Release · July 28, 2025</div>
+                    <div class="ws-news__lang">中文 · Original</div>
+                    <div class="ws-news__meta">道通科技 · 2025-07-28 17:47</div>
+                    <h4 class="ws-news__headline">世界人工智能大会举行，上智院携手道通科技启动"Physical AI"新赛道，加速AI深度实体化</h4>
+                    <p>2025世界人工智能大会暨人工智能全球治理高级别会议（WAIC 2025）于7月26日–28日在上海举办。作为全球人工智能领域的旗舰级盛会，本届大会以"智能时代 同球共济"为主题，聚焦AI的技术突破、产业融合与全球治理。</p>
+                    <p>深圳市道通科技股份有限公司（下称"道通科技"）及旗下机器人子公司深圳市道和通泰机器人公司参与大会多个环节，包括作为"星河启智·科学智能开放合作论坛"首批产业合作伙伴，共同启动"Physical AI"全球新赛道；同步亮相世界人工智能大会展台，展示其"空地一体具身智能解决方案"。</p>
+                    <h5>共启"Physical AI"全球挑战赛，推动AI走向实体世界</h5>
+                    <p>身处技术加速演进的时代浪潮之巅，空间智能、多模态复杂推理、多智能体协同控制等关键技术正经历日新月异的变革。为加速突破性创新，汇聚前沿智慧，在本届论坛上，道通科技与上智院面向全球联合启动"世界科学智能大赛·Physical AI赛道"。</p>
+                    <p>该赛道的设立，正契合英伟达CEO黄仁勋提出的AI发展趋势："人工智能的下一波浪潮是Physical AI"——AI不仅是模型能力的革新，更是感知、推理、执行嵌入实体系统的关键跃迁。道通科技凭借其在智能机器人、诊断终端、能源系统等垂直场景的软硬协同能力，将为参赛团队提供工业级场景验证条件，加速科研成果的工程转化。</p>
+                    <blockquote>李红京在大会致辞中表示："我们正处于一个前所未有的时代，人工智能正迎来它的奇点时刻，AI正系统性重塑各行各业。人工智能这项年轻的事业，终将由年轻人赋予灵魂。在此，我代表道通科技，也代表产业界，诚挚欢迎全球优秀的人才与科研团队，共同加入这场探索。让我们共同奔赴人工智能的下一浪潮！"</blockquote>
+                    <p>论坛现场，道通科技亦作为首批签约产业合作伙伴，参与"星河启智科学智能开放平台"生态建设。该平台由上智院联合无限光年、复旦大学共同打造，定位以科学家为中心的智能体原生全链路科学智能开放平台，面向全球科学家提供覆盖高价值科学数据、开源科学智能模型、面向科研领域的高效智算、干湿实验闭环、多智能体推理规划及多学科众研的全栈基础设施，打造科学智能 2.0 时代的"最强大脑"。道通科技的加入将为平台注入产业活力，以产业视角加速实践落地，为科学智能成果的工程化转化提供技术与场景支撑。</p>
+                    <p>从推动全球挑战赛设立，到参与"星河启智科学智能开放平台"顶层合作，道通科技在推动AI技术落地的同时，积极参与产业标准与生态规则的构建。</p>
+                    <h5>多场景呈现，展示具身智能解决方案与交互体验</h5>
+                    <p>除参与平台与赛道建设外，道通科技及子公司道和通泰机器人在WAIC 2025现场展示其具身智能产品体系。</p>
+                    <p>在"超聚变-道和通泰联合展台"中，双方展示"空地一体具身智能解决方案"，该方案已形成完整商业闭环，其以具备强大感知、决策与交互能力的"AI大脑"为核心，驱动由无人机、地面多形态机器人、反无人系统组成的空地智能体，实现集群协同、自主作业。方案的"AI大脑"融合了多模态识别、具身及行业三大垂域模型和AI平台底座。道通科技面向能源、交通等行业客户，构建智能化、无人化、空地一体化的具身集群作业新范式，后续可持续应用到多个场景，赋能千行百业。</p>
+                    <p>近年来，道通科技持续在智能诊断、数字能源、AI机器人等领域深化多模态AI能力部署，构建以AI Agent为核心的软硬一体化服务体系，实现从交互、识别、推理到决策、执行的端到端智能闭环。通过与"星河启智科学智能开放平台"的深入协同，道通科技将发挥其在垂直行业中的工程转化优势，帮助科研模型更快进入实战场景，也为自身AI系统能力的持续演进引入更广泛的创新源泉。</p>
+                    <p>道通作为空地一体具身智能的引领者和Physical AI的先锋探索者，以领先的行业级大模型为智能中枢，构建开放赋能的AI平台，打造Digital Agents集群，并成功驱动空、地机器人等Physical Agents实现复杂环境下的集群智慧。</p>
+                    <blockquote>李红京在大会发表致辞中表示："我们以仰望星空的探索精神，聚焦于Physical AI的核心技术难题；同时，我们也脚踏实地，将这些技术突破应用于智慧能源、智慧交通、智慧城市等广泛产业场景，解决实际问题。"</blockquote>
+                    <p class="ws-news__source">原文来源：<a href="https://wallstreetcn.com/articles/3752042" target="_blank" rel="noopener noreferrer">华尔街见闻 · 阅读原文 ↗</a></p>
+
+                    <hr class="ws-news__divider">
+
+                    <div class="ws-news__lang">English · Translation</div>
+                    <div class="ws-news__meta">Press Release · July 28, 2025</div>
                     <h4 class="ws-news__headline">Autel and Shanghai AI Laboratory Open the "Physical AI" Track, Accelerating AI's Move Into the Real World</h4>
                     <p>SHANGHAI — The World Artificial Intelligence Conference wrapped up its three-day run on July 28, drawing the global AI community around the theme "Intelligent Era, Shared Future." Among the week's most closely watched announcements was a new partnership between Autel, a robotics and smart-hardware innovator, and the Shanghai AI Laboratory, one of the world's leading AI research organizations.</p>
                     <p>Together, the two organizations officially opened the "Physical AI" track — a global competition and open collaboration platform designed to move artificial intelligence out of the cloud and into the physical world. The initiative invites researchers and engineering teams worldwide to tackle the hardest problems in embodied intelligence: spatial understanding, multimodal reasoning, and multi-agent coordination in real-world environments.</p>
