@@ -175,12 +175,60 @@
   .lightbox__close:hover{background:rgba(255,255,255,.18)}
   @media(hover:none){.media__cap{opacity:1;transform:none;background:rgba(0,0,0,.45)}}
 
+  /* ============ WRITING SAMPLES — accordion ============ */
+  .writing{padding:80px 0 50px;background:#0A0A0A}
+  .writing__label{margin-bottom:34px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);letter-spacing:.08em}
+  .ws{display:flex;flex-direction:column;gap:18px}
+  .ws-card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .3s ease,opacity .7s ease,transform .7s ease}
+  .ws-card:not(.open):hover{border-color:rgba(126,224,192,.28);animation:wsBreath 2.6s ease-in-out infinite}
+  @keyframes wsBreath{0%,100%{box-shadow:0 0 15px rgba(126,224,192,.1)}50%{box-shadow:0 0 26px rgba(126,224,192,.2)}}
+  .ws-card__head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+  .ws-card__txt{min-width:0}
+  .ws-card__title{font-size:20px;font-weight:700;letter-spacing:-.01em;transition:color .25s}
+  .ws-card:hover .ws-card__title{color:var(--mint)}
+  .ws-card__ctx{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);margin-top:7px;line-height:1.55;max-width:620px}
+  .ws-card__ctl{display:flex;align-items:center;gap:14px;flex-shrink:0}
+  .ws-card__btn{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--mint);letter-spacing:.02em;white-space:nowrap}
+  .ws-card__plus{font-family:"JetBrains Mono",monospace;font-size:22px;line-height:1;color:var(--gray2);transition:transform .35s var(--ease),color .25s}
+  .ws-card.open .ws-card__plus{transform:rotate(45deg);color:var(--mint)}
+  .ws-card__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.23,1,.32,1)}
+  .ws-card.open .ws-card__body{grid-template-rows:1fr}
+  .ws-card__body-inner{overflow:hidden;min-height:0}
+  .ws-card__body-pad{padding:2px 28px 30px;border-top:1px solid var(--line)}
+  .ws-disclaimer{font-size:12px;font-style:italic;color:var(--gray2);margin:20px 0 22px;line-height:1.55}
+  /* sample 1 — news portal */
+  .ws-news__meta{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gray2);letter-spacing:.04em;margin-bottom:16px}
+  .ws-news__headline{font-size:21px;font-weight:700;line-height:1.5;letter-spacing:-.01em;margin-bottom:22px}
+  .ws-news h5{font-size:17px;font-weight:700;line-height:1.45;margin:26px 0 12px;letter-spacing:-.01em}
+  .ws-news p{font-family:Georgia,"Times New Roman","Songti SC","STSong","SimSun",serif;font-size:15px;line-height:1.75;color:var(--gray);margin-bottom:14px}
+  .ws-news blockquote{border-left:2px solid var(--mint);padding:8px 0 8px 18px;margin:20px 0;font-family:Georgia,"Times New Roman","Songti SC","STSong","SimSun",serif;font-size:15px;line-height:1.75;color:#cdcdcd;font-style:italic}
+  /* sample 2 — email client */
+  .ws-email{background:#161616;border:1px solid var(--divider);border-radius:10px;overflow:hidden}
+  .ws-email__head{padding:14px 18px;border-bottom:1px solid var(--divider);font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gray2);display:flex;flex-direction:column;gap:5px}
+  .ws-email__head b{color:var(--gray);font-weight:500}
+  .ws-email__body{padding:22px 18px}
+  .ws-email__body p{font-size:15px;line-height:1.6;color:#d7d7d7;margin-bottom:14px}
+  /* sample 3 — confidential doc */
+  .ws-doc{border:1px solid var(--divider);border-radius:10px;padding:22px 24px;position:relative}
+  .ws-doc__badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;color:#ff6b6b;border:1px solid rgba(255,107,107,.5);padding:4px 10px;border-radius:4px;margin-bottom:18px}
+  .ws-doc__meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gray);line-height:1.8;margin-bottom:4px}
+  .ws-doc__meta b{color:var(--white);font-weight:600}
+  .ws-doc h5{font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--white);margin:22px 0 10px}
+  .ws-doc p{font-size:14px;line-height:1.65;color:var(--gray);margin-bottom:8px}
+  .ws-doc ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+  .ws-doc li{position:relative;padding-left:16px;font-size:14px;line-height:1.65;color:var(--gray)}
+  .ws-doc li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:var(--mint);border-radius:1px}
+  .ws-doc li b{color:var(--white);font-weight:600}
+  @media(max-width:560px){.ws-card__head{flex-direction:column;align-items:flex-start;gap:14px;padding:20px}.ws-card__body-pad{padding:2px 20px 24px}.ws-card__ctl{align-self:flex-start}}
+
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;scroll-snap-type:none}
     .reveal{opacity:1;transform:none;transition:none}
     .about__line{height:100%}
     .loader__cursor{animation:none}
     .case{transition:none}
+    .ws-card__body{transition:none}
+    .ws-card:not(.open):hover{animation:none}
     .spotlight{opacity:0}
     .carousel{height:auto;perspective:none}
     .pcard{position:relative;top:auto;left:auto;right:auto;transform:none;opacity:1;filter:none;margin-bottom:14px;pointer-events:auto}
@@ -293,6 +341,140 @@
         <button class="case__link" data-open="visual">View project details <span>&rarr;</span></button>
       </article>
 
+    </div>
+  </section>
+
+  <!-- WRITING SAMPLES — accordion -->
+  <section class="writing" id="writingSection">
+    <div class="wrap">
+      <div class="writing__label reveal">// WRITING SAMPLES</div>
+
+      <div class="ws">
+
+        <!-- Sample 1 — Press Release (WSJ-style news portal) -->
+        <article class="ws-card reveal">
+          <div class="ws-card__head" role="button" tabindex="0" aria-expanded="false">
+            <div class="ws-card__txt">
+              <h3 class="ws-card__title">Press Release</h3>
+              <p class="ws-card__ctx">Launching the "Physical AI" track at WAIC 2025 — a high-impact industry partnership announcement.</p>
+            </div>
+            <div class="ws-card__ctl">
+              <span class="ws-card__btn">[ Click to read sample ]</span>
+              <span class="ws-card__plus">+</span>
+            </div>
+          </div>
+          <div class="ws-card__body">
+            <div class="ws-card__body-inner">
+              <div class="ws-card__body-pad">
+                <p class="ws-disclaimer">Note: Sensitive brand names and confidential data have been redacted for portfolio purposes.</p>
+                <div class="ws-news">
+                  <div class="ws-news__meta">道通科技 · 2025-07-28 17:47</div>
+                  <h4 class="ws-news__headline">世界人工智能大会举行，上智院携手道通科技启动"Physical AI"新赛道，加速AI深度实体化</h4>
+                  <p>2025世界人工智能大会暨人工智能全球治理高级别会议（WAIC 2025）于7月26日–28日在上海举办。作为全球人工智能领域的旗舰级盛会，本届大会以"智能时代 同球共济"为主题，聚焦AI的技术突破、产业融合与全球治理。</p>
+                  <p>深圳市道通科技股份有限公司（下称"道通科技"）及旗下机器人子公司深圳市道和通泰机器人公司参与大会多个环节，包括作为"星河启智·科学智能开放合作论坛"首批产业合作伙伴，共同启动"Physical AI"全球新赛道；同步亮相世界人工智能大会展台，展示其"空地一体具身智能解决方案"。</p>
+                  <h5>共启"Physical AI"全球挑战赛，推动AI走向实体世界</h5>
+                  <p>身处技术加速演进的时代浪潮之巅，空间智能、多模态复杂推理、多智能体协同控制等关键技术正经历日新月异的变革。为加速突破性创新，汇聚前沿智慧，在本届论坛上，道通科技与上智院面向全球联合启动"世界科学智能大赛·Physical AI赛道"。</p>
+                  <p>该赛道的设立，正契合英伟达CEO黄仁勋提出的AI发展趋势："人工智能的下一波浪潮是Physical AI"——AI不仅是模型能力的革新，更是感知、推理、执行嵌入实体系统的关键跃迁。道通科技凭借其在智能机器人、诊断终端、能源系统等垂直场景的软硬协同能力，将为参赛团队提供工业级场景验证条件，加速科研成果的工程转化。</p>
+                  <blockquote>李红京在大会致辞中表示："我们正处于一个前所未有的时代，人工智能正迎来它的奇点时刻，AI正系统性重塑各行各业。人工智能这项年轻的事业，终将由年轻人赋予灵魂。在此，我代表道通科技，也代表产业界，诚挚欢迎全球优秀的人才与科研团队，共同加入这场探索。让我们共同奔赴人工智能的下一浪潮！"</blockquote>
+                  <p>论坛现场，道通科技亦作为首批签约产业合作伙伴，参与"星河启智科学智能开放平台"生态建设。该平台由上智院联合无限光年、复旦大学共同打造，定位以科学家为中心的智能体原生全链路科学智能开放平台，面向全球科学家提供覆盖高价值科学数据、开源科学智能模型、面向科研领域的高效智算、干湿实验闭环、多智能体推理规划及多学科众研的全栈基础设施，打造科学智能 2.0 时代的"最强大脑"。道通科技的加入将为平台注入产业活力，以产业视角加速实践落地，为科学智能成果的工程化转化提供技术与场景支撑。</p>
+                  <p>从推动全球挑战赛设立，到参与"星河启智科学智能开放平台"顶层合作，道通科技在推动AI技术落地的同时，积极参与产业标准与生态规则的构建。</p>
+                  <h5>多场景呈现，展示具身智能解决方案与交互体验</h5>
+                  <p>除参与平台与赛道建设外，道通科技及子公司道和通泰机器人在WAIC 2025现场展示其具身智能产品体系。</p>
+                  <p>在"超聚变-道和通泰联合展台"中，双方展示"空地一体具身智能解决方案"，该方案已形成完整商业闭环，其以具备强大感知、决策与交互能力的"AI大脑"为核心，驱动由无人机、地面多形态机器人、反无人系统组成的空地智能体，实现集群协同、自主作业。方案的"AI大脑"融合了多模态识别、具身及行业三大垂域模型和AI平台底座。道通科技面向能源、交通等行业客户，构建智能化、无人化、空地一体化的具身集群作业新范式，后续可持续应用到多个场景，赋能千行百业。</p>
+                  <p>近年来，道通科技持续在智能诊断、数字能源、AI机器人等领域深化多模态AI能力部署，构建以AI Agent为核心的软硬一体化服务体系，实现从交互、识别、推理到决策、执行的端到端智能闭环。通过与"星河启智科学智能开放平台"的深入协同，道通科技将发挥其在垂直行业中的工程转化优势，帮助科研模型更快进入实战场景，也为自身AI系统能力的持续演进引入更广泛的创新源泉。</p>
+                  <p>道通作为空地一体具身智能的引领者和Physical AI的先锋探索者，以领先的行业级大模型为智能中枢，构建开放赋能的AI平台，打造Digital Agents集群，并成功驱动空、地机器人等Physical Agents实现复杂环境下的集群智慧。</p>
+                  <blockquote>李红京在大会发表致辞中表示："我们以仰望星空的探索精神，聚焦于Physical AI的核心技术难题；同时，我们也脚踏实地，将这些技术突破应用于智慧能源、智慧交通、智慧城市等广泛产业场景，解决实际问题。"</blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sample 2 — Media Pitch Email (dark email client) -->
+        <article class="ws-card reveal">
+          <div class="ws-card__head" role="button" tabindex="0" aria-expanded="false">
+            <div class="ws-card__txt">
+              <h3 class="ws-card__title">Media Pitch Email</h3>
+              <p class="ws-card__ctx">Teasing a major post-production disruption for Insta360 X6 (leak phase).</p>
+            </div>
+            <div class="ws-card__ctl">
+              <span class="ws-card__btn">[ Click to read sample ]</span>
+              <span class="ws-card__plus">+</span>
+            </div>
+          </div>
+          <div class="ws-card__body">
+            <div class="ws-card__body-inner">
+              <div class="ws-card__body-pad">
+                <p class="ws-disclaimer">Note: Sensitive brand names and confidential data have been redacted for portfolio purposes.</p>
+                <div class="ws-email">
+                  <div class="ws-email__head">
+                    <div><b>To:</b> [ Tech Editor ]</div>
+                    <div><b>Subject:</b> Exclusive: A major shift in action-cam post-production coming next week</div>
+                  </div>
+                  <div class="ws-email__body">
+                    <p>Hi,</p>
+                    <p>I've been following your coverage of the smart camera and tech industry, and I really value your perspective on emerging technologies.</p>
+                    <p>I'm reaching out because we have something brewing behind closed doors at Insta360 that directly addresses this. While I can't reveal the full specs just yet, we are about to launch a new device that will fundamentally change how users handle post-production — specifically regarding AI-driven editing.</p>
+                    <p>I'd love to offer you an exclusive, embargoed early look before the official reveal next week.</p>
+                    <p>Would you be open to a quick briefing? No pressure at all — I just wanted to give you the first peek before the rest of the industry gets the details.</p>
+                    <p>Best regards,<br>PR Team, Insta360</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sample 3 — Crisis PR KOL Brief (confidential doc) -->
+        <article class="ws-card reveal">
+          <div class="ws-card__head" role="button" tabindex="0" aria-expanded="false">
+            <div class="ws-card__txt">
+              <h3 class="ws-card__title">Crisis PR KOL Brief</h3>
+              <p class="ws-card__ctx">Shifting the narrative from a "copycat dispute" to a "tech duopoly" (finance edition).</p>
+            </div>
+            <div class="ws-card__ctl">
+              <span class="ws-card__btn">[ Click to read sample ]</span>
+              <span class="ws-card__plus">+</span>
+            </div>
+          </div>
+          <div class="ws-card__body">
+            <div class="ws-card__body-inner">
+              <div class="ws-card__body-pad">
+                <p class="ws-disclaimer">Note: Sensitive brand names and confidential data have been redacted for portfolio purposes.</p>
+                <div class="ws-doc">
+                  <span class="ws-doc__badge">[ CONFIDENTIAL ]</span>
+                  <div class="ws-doc__meta">
+                    <div><b>致：</b>[ 创作者名称 ]</div>
+                    <div><b>合作主题：</b>中国硬科技出海的"双雄时代"</div>
+                    <div><b>内容形式：</b>1 × 深度财经分析视频（Bilibili / 抖音 / 视频号）</div>
+                  </div>
+                  <h5>1 · 核心传播目标</h5>
+                  <p>引导受众从"情绪化的抄袭争议"，转向"中国影像科技企业如何通过良性竞争做大全球蛋糕"的宏观思考。不直接洗白，而是用商业逻辑降维打击负面舆论。</p>
+                  <h5>2 · 视频基调与创意方向</h5>
+                  <ul>
+                    <li><b>基调：</b>客观、硬核、深度、数据驱动。</li>
+                    <li><b>画面要求：</b>多用市占率图表（如全球全景相机 / 无人机市占率折线图）、专利数据可视化图表、海外市场营收对比，避免使用带有强烈负面情绪的网友评论截图。</li>
+                  </ul>
+                  <h5>3 · 核心话术与叙事框架（Talking Points）</h5>
+                  <ul>
+                    <li><b>切题（Hook）：</b>"最近科技圈都在吃两家巨头的瓜，但如果你只看到'抄袭'，那就太小看中国硬科技出海的残酷与伟大了。"</li>
+                    <li><b>升维（The Pivot）：</b>"其实，这不是简单的侵权，而是一场典型的'专利护城河'与'品类创新'的碰撞。回顾苹果与三星、耐克与阿迪达斯，任何一个成熟的行业，最终都会走向'双寡头（Duopoly）'的格局。"</li>
+                    <li><b>客观分析（The Logic）：</b>"一方是无人机霸主向下兼容做全景相机，另一方是全景相机王者向上探索做无人机。表面是互偷老家，内核其实是在各自的舒适区之外，用极高的研发投入去试探对方的底线，最终把整个行业的门槛拉高，让海外老牌厂商无路可走。"</li>
+                    <li><b>升华（The Conclusion）：</b>"神仙打架，凡人遭殃？不，神仙打架，才能逼出最强的中国制造。比起内卷价格，我更希望看到这两家中国公司，在海外市场上顶峰相见。"</li>
+                  </ul>
+                  <h5>4 · 避坑指南（Do's and Don'ts）</h5>
+                  <ul>
+                    <li><b>DO：</b>强调"竞争带来创新"、"专利战是出海必修课"、"两家都在疯狂砸钱做研发"。</li>
+                    <li><b>DON'T：</b>绝对不要在视频中站队，不要使用"偷"、"山寨"等定性词汇，不要提及任何具体的负面黑公关传闻。</li>
+                    <li><b>DON'T：</b>避免煽动两家粉丝的饭圈化对立，评论区需引导为"理性探讨产业格局"。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </section>
 
@@ -606,6 +788,23 @@
     if(e.key!=='Escape') return;
     if(lightbox.classList.contains('show')){ closeLightbox(); }
     else{ closeModal(); }
+  });
+
+  /* ---------- writing samples accordion ---------- */
+  document.querySelectorAll('.ws-card__head').forEach(function(head){
+    function toggle(){
+      var card = head.closest('.ws-card');
+      var wasOpen = card.classList.contains('open');
+      document.querySelectorAll('.ws-card.open').forEach(function(c){
+        c.classList.remove('open');
+        c.querySelector('.ws-card__head').setAttribute('aria-expanded','false');
+      });
+      if(!wasOpen){ card.classList.add('open'); head.setAttribute('aria-expanded','true'); }
+    }
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', function(e){
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }
+    });
   });
 </script>
 </body>
